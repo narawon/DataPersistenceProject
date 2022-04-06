@@ -23,7 +23,7 @@ public class DataManager : MonoBehaviour
         if (Instance != null)
         {
             // To delete duplicated instances
-            Debug.Log("Destroied: " + Instance);
+            //Debug.Log("Destroied: " + Instance);
             Destroy(gameObject);
             return;
         }
@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
         
         
         
-        Debug.Log("Created: " + Instance);
+        //Debug.Log("Created: " + Instance);
         LoadData();
 
         Instance = this;
@@ -54,6 +54,7 @@ public class DataManager : MonoBehaviour
     public void LoadData()
     {
         string filePath = Application.persistentDataPath + "/" + DataFileName;
+        Debug.Log(filePath);
         
         if (File.Exists(filePath))
         {
