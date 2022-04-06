@@ -7,7 +7,7 @@ using System.IO;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager Instance;
+    public static DataManager Instance { get; private set; }
     private const string DataFileName = "GameData.json";
 
     public string bestPlayerName;
