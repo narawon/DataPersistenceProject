@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainManager : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text BestScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -25,7 +25,7 @@ public class MainManager : MonoBehaviour
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
+
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
         {
@@ -37,6 +37,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        ShowBestScore();
     }
 
     private void Update()
@@ -71,6 +73,21 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+        //Debug.Log(m_Points + " : " + DataManager.Instance.bestScore);
+        if (DataManager.Instance && m_Points > DataManager.Instance.bestScore)
+        {
+            DataManager.Instance.bestScore = m_Points;
+            DataManager.Instance.bestPlayerName = DataManager.Instance.playerName;
+            ShowBestScore();
+        }
+    }
+
+    void ShowBestScore()
+    {
+        if (DataManager.Instance)
+        {
+            BestScoreText.text = "Best Score by " + DataManager.Instance.bestPlayerName + " : " + DataManager.Instance.bestScore;
+        }
     }
 
     public void GameOver()
